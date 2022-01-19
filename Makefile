@@ -68,7 +68,8 @@ SRC_LIST	=	ft_atoi.c \
 				ft_lstnew.c \
 				ft_lstsize.c \
 				get_next_line.c \
-				get_next_line_utils.c
+				get_next_line_utils.c \
+				mgo_free.c
 SRCS		=	$(addprefix $(SRC_DIR), $(SRC_LIST))
 
 OBJ_DIR		=	./objects/

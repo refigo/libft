@@ -13,7 +13,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-size_t	strlen(const char *s)
+size_t	gnl_strlen(const char *s)
 {
 	size_t	i;
 
@@ -23,7 +23,7 @@ size_t	strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strchr(const char *s, int c)
+char	*gnl_strchr(const char *s, int c)
 {
 	char	chr_c;
 
@@ -39,7 +39,7 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_strndup(const char *str, ssize_t len)
+char	*gnl_strndup(const char *str, ssize_t len)
 {
 	char	*duped;
 	size_t	i;
@@ -57,7 +57,7 @@ char	*ft_strndup(const char *str, ssize_t len)
 	return (duped);
 }
 
-char	*ft_strjoin_with_free(char *s1, char *s2)
+char	*gnl_strjoin_with_free(char *s1, char *s2)
 {
 	char	*joined;
 	int		i;

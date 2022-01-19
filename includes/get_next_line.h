@@ -28,9 +28,9 @@ typedef struct s_gnl
 }				t_gnl;
 
 int				get_next_line(int fd, char **line);
-char			*ft_strjoin_with_free(char *s1, char *s2);
-char			*ft_strndup(const char *str, ssize_t len);
-char			*ft_strchr(const char *s, int c);
-size_t			strlen(const char *s);
+char			*gnl_strjoin_with_free(char *s1, char *s2);
+char			*gnl_strndup(const char *str, ssize_t len);
+char			*gnl_strchr(const char *s, int c);
+size_t			gnl_strlen(const char *s);
 
 #endif

@@ -68,4 +68,8 @@ void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), \
 							void (*del)(void *));
 
+// mgo functions
+int		mgo_free_2ptr(char	**p);
+int		mgo_free_3ptr(char	***p);
+
 #endif

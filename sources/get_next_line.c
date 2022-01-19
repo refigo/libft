@@ -83,14 +83,14 @@ static int	set_line(char **line, t_gnl **storage, t_gnl *carrier)
 	char	*newl;
 	char	*tmp_content;
 
-	newl = ft_strchr(carrier->content, '\n');
+	newl = gnl_strchr(carrier->content, '\n');
 	if (newl)
 	{
-		*line = ft_strndup(carrier->content, (newl - carrier->content));
+		*line = gnl_strndup(carrier->content, (newl - carrier->content));
 		if (!(*line))
 			return (-1);
 		tmp_content = carrier->content;
-		carrier->content = ft_strndup(newl + 1, strlen(newl + 1));
+		carrier->content = gnl_strndup(newl + 1, gnl_strlen(newl + 1));
 		if (!(carrier->content))
 		{
 			free(tmp_content);
@@ -101,7 +101,7 @@ static int	set_line(char **line, t_gnl **storage, t_gnl *carrier)
 	}
 	else
 	{
-		*line = ft_strndup(carrier->content, strlen(carrier->content));
+		*line = gnl_strndup(carrier->content, gnl_strlen(carrier->content));
 		if (!(*line))
 			return (-1);
 		del_storage(storage, carrier->fd);
@@ -126,12 +126,12 @@ int	get_next_line(int fd, char **line)
 	{
 		buf[read_size] = '\0';
 		if (carrier->content)
-			carrier->content = ft_strjoin_with_free(carrier->content, buf);
+			carrier->content = gnl_strjoin_with_free(carrier->content, buf);
 		else
-			carrier->content = ft_strndup(buf, read_size);
+			carrier->content = gnl_strndup(buf, read_size);
 		if (!(carrier->content))
 			return (del_storage(&storage, fd));
-		if (ft_strchr(carrier->content, '\n') || read_size == 0)
+		if (gnl_strchr(carrier->content, '\n') || read_size == 0)
 			break ;
 	}
 	if (read_size < 0)
