@@ -77,7 +77,7 @@ OBJ_LIST	=	$(SRC_LIST:.c=.o)
 OBJS		=	$(addprefix $(OBJ_DIR), $(OBJ_LIST))
 
 $(NAME)	:	$(OBJS)
-	@$(AR) $(AR_FLAG) $@ $^
+	$(AR) $(AR_FLAG) $@ $^
 
 $(OBJ_DIR)%.o		:	$(SRC_DIR)%.c
 	@mkdir $(OBJ_DIR) 2> /dev/null || true

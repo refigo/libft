@@ -6,12 +6,18 @@
 /*   By: mgo <mgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 11:22:52 by mgo               #+#    #+#             */
-/*   Updated: 2021/07/25 11:52:25 by refigo           ###   ########.fr       */
+/*   Updated: 2022/01/07 12:08:17 by mgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
+
+ssize_t	gnl_read(ssize_t *read_size, int fd, void *buf, size_t count)
+{
+	*read_size = read(fd, buf, count);
+	return (*read_size);
+}
 
 size_t	gnl_strlen(const char *s)
 {
@@ -39,7 +45,7 @@ char	*gnl_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*gnl_strndup(const char *str, ssize_t len)
+int	gnl_strndup(char **dest, const char *str, ssize_t len)
 {
 	char	*duped;
 	size_t	i;
@@ -47,14 +53,20 @@ char	*gnl_strndup(const char *str, ssize_t len)
 	i = 0;
 	duped = (char *)malloc(len + 1);
 	if (!(duped))
-		return (NULL);
+		return (0);
 	while (len--)
 	{
 		duped[i] = str[i];
 		i++;
 	}
 	duped[i] = '\0';
-	return (duped);
+	if (duped[0] == '\0')
+	{
+		free(duped);
+		duped = NULL;
+	}
+	*dest = duped;
+	return (1);
 }
 
 char	*gnl_strjoin_with_free(char *s1, char *s2)

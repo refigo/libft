@@ -6,7 +6,7 @@
 /*   By: mgo <mgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 11:15:09 by mgo               #+#    #+#             */
-/*   Updated: 2021/07/25 11:46:24 by refigo           ###   ########.fr       */
+/*   Updated: 2022/01/07 12:08:15 by mgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_gnl	*new_storage(int fd)
 	return (ret);
 }
 
-static t_gnl	*set_carrier(t_gnl **storage, int fd)
+static int	set_carrier(t_gnl **storage, t_gnl **to_set, int fd)
 {
 	t_gnl	*carrier;
 	t_gnl	*tmp;
@@ -34,7 +34,7 @@ static t_gnl	*set_carrier(t_gnl **storage, int fd)
 	{
 		*storage = new_storage(fd);
 		if (!(*storage))
-			return (NULL);
+			return (-1);
 	}
 	carrier = *storage;
 	while (carrier && (fd != carrier->fd))
@@ -46,10 +46,11 @@ static t_gnl	*set_carrier(t_gnl **storage, int fd)
 	{
 		carrier = new_storage(fd);
 		if (!(carrier))
-			return (NULL);
+			return (-1);
 		tmp->next = carrier;
 	}
-	return (carrier);
+	*to_set = carrier;
+	return (1);
 }
 
 static int	del_storage(t_gnl **storage, int fd)
@@ -86,12 +87,10 @@ static int	set_line(char **line, t_gnl **storage, t_gnl *carrier)
 	newl = gnl_strchr(carrier->content, '\n');
 	if (newl)
 	{
-		*line = gnl_strndup(carrier->content, (newl - carrier->content));
-		if (!(*line))
-			return (-1);
+		if (!gnl_strndup(line, carrier->content, (newl - carrier->content)))
+			return (del_storage(storage, carrier->fd));
 		tmp_content = carrier->content;
-		carrier->content = gnl_strndup(newl + 1, gnl_strlen(newl + 1));
-		if (!(carrier->content))
+		if (!gnl_strndup(&(carrier->content), newl + 1, gnl_strlen(newl + 1)))
 		{
 			free(tmp_content);
 			return (del_storage(storage, carrier->fd));
@@ -99,14 +98,10 @@ static int	set_line(char **line, t_gnl **storage, t_gnl *carrier)
 		free(tmp_content);
 		return (1);
 	}
-	else
-	{
-		*line = gnl_strndup(carrier->content, gnl_strlen(carrier->content));
-		if (!(*line))
-			return (-1);
-		del_storage(storage, carrier->fd);
-		return (0);
-	}
+	if (!gnl_strndup(line, carrier->content, gnl_strlen(carrier->content)))
+		return (del_storage(storage, carrier->fd));
+	del_storage(storage, carrier->fd);
+	return (0);
 }
 
 int	get_next_line(int fd, char **line)
@@ -118,17 +113,15 @@ int	get_next_line(int fd, char **line)
 
 	if ((fd < 0) || !line || (BUFFER_SIZE <= 0))
 		return (-1);
-	carrier = set_carrier(&storage, fd);
-	if (!(carrier))
+	if (!set_carrier(&storage, &carrier, fd))
 		return (del_storage(&storage, fd));
-	read_size = read(fd, buf, BUFFER_SIZE);
-	while (read_size >= 0)
+	while (gnl_read(&read_size, fd, buf, BUFFER_SIZE) >= 0)
 	{
 		buf[read_size] = '\0';
 		if (carrier->content)
 			carrier->content = gnl_strjoin_with_free(carrier->content, buf);
 		else
-			carrier->content = gnl_strndup(buf, read_size);
+			gnl_strndup(&(carrier->content), buf, read_size);
 		if (!(carrier->content))
 			return (del_storage(&storage, fd));
 		if (gnl_strchr(carrier->content, '\n') || read_size == 0)
