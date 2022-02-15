@@ -6,7 +6,7 @@
 #    By: mgo <mgo@student.42seoul.kr>               +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/17 10:22:57 by mgo               #+#    #+#              #
-#    Updated: 2021/12/21 12:33:24 by mgo              ###   ########.fr        #
+#    Updated: 2022/02/15 14:49:41 by mgo              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,7 +69,8 @@ SRC_LIST	=	ft_atoi.c \
 				ft_lstsize.c \
 				get_next_line.c \
 				get_next_line_utils.c \
-				mgo_free.c
+				mgo_free.c \
+				mgo_strcmp.c
 SRCS		=	$(addprefix $(SRC_DIR), $(SRC_LIST))
 
 OBJ_DIR		=	./objects/
@@ -77,7 +78,7 @@ OBJ_LIST	=	$(SRC_LIST:.c=.o)
 OBJS		=	$(addprefix $(OBJ_DIR), $(OBJ_LIST))
 
 $(NAME)	:	$(OBJS)
-	$(AR) $(AR_FLAG) $@ $^
+	@$(AR) $(AR_FLAG) $@ $^
 
 $(OBJ_DIR)%.o		:	$(SRC_DIR)%.c
 	@mkdir $(OBJ_DIR) 2> /dev/null || true
@@ -86,10 +87,10 @@ $(OBJ_DIR)%.o		:	$(SRC_DIR)%.c
 all 	:	$(NAME)
 
 clean	:
-	$(RM) $(RM_FLAG) $(OBJ_DIR)
+	@$(RM) $(RM_FLAG) $(OBJ_DIR)
 
 fclean	:	clean
-	$(RM) $(RM_FLAG) $(NAME)
+	@$(RM) $(RM_FLAG) $(NAME)
 
 re		:	fclean all
 

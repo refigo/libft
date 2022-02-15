@@ -6,7 +6,7 @@
 /*   By: mgo <mgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/09 11:27:33 by mgo               #+#    #+#             */
-/*   Updated: 2022/01/26 18:25:14 by mgo              ###   ########.fr       */
+/*   Updated: 2022/02/15 14:46:07 by mgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), \
 // mgo functions
 int				mgo_free_2ptr(char	**p);
 int				mgo_free_3ptr(char	***p);
+int				mgo_strcmp(const char *s1, const char *s2);
 
 #endif

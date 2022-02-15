@@ -6,7 +6,7 @@
 /*   By: mgo <mgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 11:22:52 by mgo               #+#    #+#             */
-/*   Updated: 2022/01/07 12:08:17 by mgo              ###   ########.fr       */
+/*   Updated: 2022/02/15 14:15:35 by mgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,6 @@ int	gnl_strndup(char **dest, const char *str, ssize_t len)
 		i++;
 	}
 	duped[i] = '\0';
-	if (duped[0] == '\0')
-	{
-		free(duped);
-		duped = NULL;
-	}
 	*dest = duped;
 	return (1);
 }

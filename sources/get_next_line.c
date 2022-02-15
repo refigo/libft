@@ -6,7 +6,7 @@
 /*   By: mgo <mgo@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/01 11:15:09 by mgo               #+#    #+#             */
-/*   Updated: 2022/01/07 12:08:15 by mgo              ###   ########.fr       */
+/*   Updated: 2022/02/15 13:55:51 by mgo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	set_carrier(t_gnl **storage, t_gnl **to_set, int fd)
 	{
 		*storage = new_storage(fd);
 		if (!(*storage))
-			return (-1);
+			return (0);
 	}
 	carrier = *storage;
 	while (carrier && (fd != carrier->fd))
@@ -46,7 +46,7 @@ static int	set_carrier(t_gnl **storage, t_gnl **to_set, int fd)
 	{
 		carrier = new_storage(fd);
 		if (!(carrier))
-			return (-1);
+			return (0);
 		tmp->next = carrier;
 	}
 	*to_set = carrier;
